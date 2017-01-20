@@ -5,6 +5,7 @@ using UnityStandardAssets.CrossPlatformInput;
 
 public class WeaponController : MonoBehaviour
 {
+    public GameObject hitParticle;
     public float m_cooldownTime = 1.0f;
 
     bool m_canShoot;
@@ -53,7 +54,8 @@ public class WeaponController : MonoBehaviour
         for (int i = 0; i < hits.Length; i++)
         {
             RaycastHit hit = hits[i];
-            Renderer rend = hit.transform.GetComponent<Renderer>();
+            Transform hitPt = hit.transform;//.GetComponent<Renderer>();
+            Instantiate(hitParticle, hit.point, Quaternion.identity);
         }
     }
 

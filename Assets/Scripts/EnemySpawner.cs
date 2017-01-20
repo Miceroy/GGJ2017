@@ -4,9 +4,8 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    // Props
-    [SerializeField] private float m_MinimumInterval = 1f;
-    [SerializeField] private float m_MaximumInterval = 5f;
+    public float m_MinimumInterval = 1f;
+    public float m_MaximumInterval = 5f;
 
     private float m_timer = 0f;
     private float m_nextSpawnAt = 0f;
@@ -26,7 +25,7 @@ public class EnemySpawner : MonoBehaviour
             m_timer = 0f;
 
             // Spawn enemy
-            GameObject enemy = (GameObject)Instantiate(Resources.Load("Prefabs/EnemyCharacter", typeof(GameObject)), transform.position, transform.rotation);
+            Instantiate(Resources.Load("Prefabs/EnemyCharacter", typeof(GameObject)), transform.position, transform.rotation);
         }
 	}
 }

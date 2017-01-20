@@ -1,9 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class EnemyController : MonoBehaviour
 {
+    private float m_timer = 0f;
     private GameObject m_playerObject;
 
 	// Use this for initialization
@@ -13,11 +15,14 @@ public class EnemyController : MonoBehaviour
 	}
 	
 	// Update is called once per frame
-	void Update ()
+	void FixedUpdate ()
     {
+        const float threshold = 0.5f;
 
-        Vector3 enemyToPlayer = (m_playerObject.transform.position - transform.position);
-
-        transform.Translate(enemyToPlayer.normalized * Time.deltaTime * 8f);
+        if ((m_timer += Time.deltaTime) >= threshold)
+        {
+            GetComponent<NavMeshAgent>().SetDestination(m_playerObject.transform.position);
+            m_timer -= threshold;
+        }
     }
 }

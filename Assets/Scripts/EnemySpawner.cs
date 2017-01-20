@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-
     // Props
     [SerializeField] private float m_MinimumInterval = 1f;
     [SerializeField] private float m_MaximumInterval = 5f;

@@ -19,10 +19,10 @@ public class EnemySpawner : MonoBehaviour
 	// Update is called once per frame
 	void Update () {
         
-        if (m_nextSpawnAt <= (m_timer += Time.deltaTime))
+        if ((m_timer += Time.deltaTime) >= m_nextSpawnAt)
         {
+            m_timer -= m_nextSpawnAt;
             m_nextSpawnAt = Random.Range(m_MinimumInterval, m_MaximumInterval);
-            m_timer = 0f;
 
             // Spawn enemy
             Instantiate(Resources.Load("Prefabs/EnemyCharacter", typeof(GameObject)), transform.position, transform.rotation);

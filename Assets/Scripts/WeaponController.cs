@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
 
-public class WeaponController : MonoBehaviour {
+public class WeaponController : MonoBehaviour
+{
     public float m_cooldownTime = 1.0f;
 
     bool m_canShoot;
-    bool m_shoot;
-    bool m_melee;
-
+   
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
         enableShooting();
     }
 
@@ -21,25 +21,43 @@ public class WeaponController : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void Update () {
+    void Update()
+    {
 
-        m_shoot = CrossPlatformInputManager.GetButtonDown("Fire1");
-        m_melee = CrossPlatformInputManager.GetButtonDown("Fire2");
-        if (m_canShoot && m_shoot)
+        bool shoot = CrossPlatformInputManager.GetButtonDown("Fire1");
+        bool melee = CrossPlatformInputManager.GetButtonDown("Fire2");
+        if (m_canShoot && shoot)
         {
             m_canShoot = false;
             Invoke("enableShooting", m_cooldownTime);
-            Debug.Log("Shoot = " + m_shoot.ToString() );
+            doShooting();
         }
-        else if (m_canShoot && m_melee)
+        else if (m_canShoot && melee)
         {
             m_canShoot = false;
             Invoke("enableShooting", m_cooldownTime);
-            Debug.Log("Melee = " + m_melee.ToString());
+            doMelee();
         }
         else
         {
         }
 
+    }
+
+
+    void doShooting()
+    {
+        RaycastHit[] hits;
+        hits = Physics.RaycastAll(transform.position, transform.forward, 100.0F);
+        Debug.Log("hits.Length = " + hits.Length.ToString());
+        for (int i = 0; i < hits.Length; i++)
+        {
+            RaycastHit hit = hits[i];
+            Renderer rend = hit.transform.GetComponent<Renderer>();
+        }
+    }
+
+    void doMelee()
+    {
     }
 }

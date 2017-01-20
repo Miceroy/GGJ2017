@@ -8,6 +8,7 @@ public class WeaponController : MonoBehaviour
     public GameObject hitParticle;
     public Transform characterDirection;
     public float m_cooldownTime = 1.0f;
+    public float m_gunDamageAmount = 50.0f;
 
     bool m_canShoot;
    
@@ -55,8 +56,12 @@ public class WeaponController : MonoBehaviour
         for (int i = 0; i < hits.Length; i++)
         {
             RaycastHit hit = hits[i];
-            Transform hitPt = hit.transform;//.GetComponent<Renderer>();
             Instantiate(hitParticle, hit.point, Quaternion.identity);
+            HealthController health = hit.transform.GetComponent<HealthController>();
+            if( health != null)
+            {
+                health.applyDamage(m_gunDamageAmount);
+            }
         }
     }
 

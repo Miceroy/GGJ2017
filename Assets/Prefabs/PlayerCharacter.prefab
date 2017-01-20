@@ -25,6 +25,7 @@ GameObject:
   - component: {fileID: 82012306282369846}
   - component: {fileID: 114108289842692528}
   - component: {fileID: 114214430847137276}
+  - component: {fileID: 114919703463437968}
   m_Layer: 0
   m_Name: FPSController
   m_TagString: Untagged
@@ -373,6 +374,18 @@ MonoBehaviour:
   - {fileID: 0}
   m_JumpSound: {fileID: 8300000, guid: 5897aeed9b676024fbb8c694b421a861, type: 3}
   m_LandSound: {fileID: 8300000, guid: 3b09d59f4499d45428baa7a21e954296, type: 3}
+--- !u!114 &114919703463437968
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1033817803146698}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f24b05ebcd602843a5868f6def0b297, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_health: 100
 --- !u!124 &124390237546155202
 Behaviour:
   m_ObjectHideFlags: 1

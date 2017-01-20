@@ -2,15 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameController : MonoBehaviour {
+public class GameController : object {
+	static GameController g_instance = null;
 
-	// Use this for initialization
-	void Start () {
-
+	static GameController instance () {
+		if (g_instance == null) {
+			g_instance = new GameController ();
+		}
+		return g_instance;
 	}
 
-	// Update is called once per frame
-	void Update () {
-
-	}
 }

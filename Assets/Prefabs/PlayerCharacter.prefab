@@ -24,6 +24,7 @@ GameObject:
   - component: {fileID: 54384906261470292}
   - component: {fileID: 82012306282369846}
   - component: {fileID: 114108289842692528}
+  - component: {fileID: 114214430847137276}
   m_Layer: 0
   m_Name: FPSController
   m_TagString: Untagged
@@ -257,6 +258,18 @@ MonoBehaviour:
   characterDirection: {fileID: 4118031494408786}
   m_cooldownTime: 1
   m_gunDamageAmount: 50
+--- !u!114 &114214430847137276
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1033817803146698}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac54bfd806ae4484d9e22545f819c01e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_flying: 0
 --- !u!114 &114250808513633038
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -268,6 +281,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05ec5cf00ca181d45a42ba1870e148c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  forwardTransform: {fileID: 4118031494408786}
   m_IsWalking: 0
   m_WalkSpeed: 50
   m_RunSpeed: 50

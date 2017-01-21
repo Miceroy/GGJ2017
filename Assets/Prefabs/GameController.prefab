@@ -52,3 +52,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameOverObject: {fileID: 0}
+  scoreText: {fileID: 0}

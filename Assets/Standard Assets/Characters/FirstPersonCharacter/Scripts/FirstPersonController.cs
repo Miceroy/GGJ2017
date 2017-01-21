@@ -29,7 +29,6 @@ namespace UnityStandardAssets.Characters.FirstPerson
         [SerializeField] private AudioClip[] m_FootstepSounds;    // an array of footstep sounds that will be randomly selected from.
         [SerializeField] private AudioClip m_JumpSound;           // the sound played when character leaves the ground.
         [SerializeField] private AudioClip m_LandSound;           // the sound played when character touches back on ground.
-        public Camera m_flyCamera;
         public Camera m_groundCamera;
 
         private Camera m_Camera;
@@ -46,11 +45,13 @@ namespace UnityStandardAssets.Characters.FirstPerson
         private bool m_Jumping;
         private AudioSource m_AudioSource;
         private float m_GravityMultiplierTemp;
+        private float m_attackMult;
+        private float m_initialFov;
+
         // Use this for initialization
         private void Start()
         {
             m_Camera = m_groundCamera;
-            m_flyCamera.gameObject.SetActive(false);
             m_CharacterController = GetComponent<CharacterController>();
             m_OriginalCameraPosition = m_Camera.transform.localPosition;
             m_FovKick.Setup(m_Camera);
@@ -61,22 +62,18 @@ namespace UnityStandardAssets.Characters.FirstPerson
             m_AudioSource = GetComponent<AudioSource>();
 			m_MouseLook.Init(transform , m_Camera.transform);
             m_GravityMultiplierTemp = m_GravityMultiplier;
+            m_attackMult = 0f;
+            m_initialFov = m_Camera.fieldOfView;
         }
 
         public void setFlying(bool flying)
         {
             if (flying)
             {
-                m_flyCamera.gameObject.SetActive(true);
-                m_groundCamera.gameObject.SetActive(false);
-                m_Camera = m_flyCamera;
                 m_GravityMultiplier = 0.0f;
             }
             else
             {
-                m_flyCamera.gameObject.SetActive(false);
-                m_groundCamera.gameObject.SetActive(true);
-                m_Camera = m_groundCamera;
                 m_GravityMultiplier = m_GravityMultiplierTemp;
             }
         }
@@ -103,6 +100,11 @@ namespace UnityStandardAssets.Characters.FirstPerson
                 m_MoveDir.y = 0f;
             }
 
+            if (m_GravityMultiplier <= 0f && CrossPlatformInputManager.GetButtonDown("Fire2"))
+            {
+                m_attackMult = 25f;
+            }
+
             m_PreviouslyGrounded = m_CharacterController.isGrounded;
         }
 
@@ -123,6 +125,8 @@ namespace UnityStandardAssets.Characters.FirstPerson
            
             if (m_GravityMultiplier > 0.0f)
             {
+                m_Camera.fieldOfView = Mathf.Lerp(m_Camera.fieldOfView, m_initialFov, 0.1f);
+
                 Vector3 desiredMove = transform.forward * m_Input.y + transform.right * m_Input.x;
                 // get a normal for the surface that is being touched to move along it
                 RaycastHit hitInfo;
@@ -154,10 +158,14 @@ namespace UnityStandardAssets.Characters.FirstPerson
             }
             else
             {
+                float speedMult = Math.Max(1f, (m_attackMult -= Time.fixedDeltaTime * 25f));
+                
+                m_Camera.fieldOfView = Mathf.Lerp(m_Camera.fieldOfView, m_initialFov + 25f + speedMult, 0.1f);
+
                 Vector3 desiredMove = forwardTransform.forward * m_Input.y + forwardTransform.right * m_Input.x;
-                m_MoveDir.x = desiredMove.x * speed;
-                m_MoveDir.y = desiredMove.y * speed;
-                m_MoveDir.z = desiredMove.z * speed;
+                m_MoveDir.x = desiredMove.x * speed * speedMult;
+                m_MoveDir.y = desiredMove.y * speed * speedMult;
+                m_MoveDir.z = desiredMove.z * speed * speedMult;
                 Debug.Log("Flying = " + m_MoveDir.ToString());
                 m_MoveDir.y += m_JumpSpeed;
                 PlayJumpSound();

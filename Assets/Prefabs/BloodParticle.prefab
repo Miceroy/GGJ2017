@@ -113,7 +113,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 671f9183d94cddc45bf9b581f62583f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeoutTime: 2
+  timeoutTime: 4
 --- !u!198 &198137958730768050
 ParticleSystem:
   m_ObjectHideFlags: 1

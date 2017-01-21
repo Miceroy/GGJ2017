@@ -29,7 +29,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
         [SerializeField] private AudioClip[] m_FootstepSounds;    // an array of footstep sounds that will be randomly selected from.
         [SerializeField] private AudioClip m_JumpSound;           // the sound played when character leaves the ground.
         [SerializeField] private AudioClip m_LandSound;           // the sound played when character touches back on ground.
-        public Camera m_groundCamera;
+     //   public Camera m_groundCamera;
 
         private Camera m_Camera;
         private bool m_Jump;
@@ -51,7 +51,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
         // Use this for initialization
         private void Start()
         {
-            m_Camera = m_groundCamera;
+            m_Camera = Camera.main;
             m_CharacterController = GetComponent<CharacterController>();
             m_OriginalCameraPosition = m_Camera.transform.localPosition;
             m_FovKick.Setup(m_Camera);
@@ -167,10 +167,11 @@ namespace UnityStandardAssets.Characters.FirstPerson
                 m_MoveDir.y = desiredMove.y * speed * speedMult;
                 m_MoveDir.z = desiredMove.z * speed * speedMult;
                 Debug.Log("Flying = " + m_MoveDir.ToString());
-                m_MoveDir.y += m_JumpSpeed;
-                PlayJumpSound();
+              //  m_MoveDir.y += m_JumpSpeed;
+            //    PlayJumpSound();
+                /*
                 m_Jump = false;
-                m_Jumping = true;
+                m_Jumping = true;*/
                 m_CollisionFlags = m_CharacterController.Move(m_MoveDir * Time.fixedDeltaTime);
             }
             ProgressStepCycle(speed);

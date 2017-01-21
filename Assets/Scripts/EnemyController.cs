@@ -41,6 +41,13 @@ public class EnemyController : MonoBehaviour
                 m_shootTimer -= shootThreshold;
             }
         }
+
+        if (m_oldSpeed > 0.0f)
+        {
+            Vector3 toPlayer = m_playerObject.transform.position - transform.position;
+            gameObject.transform.rotation =
+                Quaternion.LookRotation(toPlayer.normalized);
+        }
     }
 
     void shootBullet()

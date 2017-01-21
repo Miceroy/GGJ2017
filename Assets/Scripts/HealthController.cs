@@ -2,8 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HealthController : MonoBehaviour {
+public class HealthController : MonoBehaviour
+{
     public float m_health = 100;
+
+    private SceneController m_scene;
+
+    void Start()
+    {
+        m_scene = FindObjectOfType<SceneController>();
+    }
     
     public void applyDamage(float damage)
     {
@@ -18,5 +26,6 @@ public class HealthController : MonoBehaviour {
     void deleteMe()
     {
         Destroy(gameObject);
+        m_scene.checkWaveEnd();
     }
 }

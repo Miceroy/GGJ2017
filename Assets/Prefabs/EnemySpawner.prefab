@@ -25,7 +25,7 @@ GameObject:
   - component: {fileID: 114686795080406214}
   m_Layer: 0
   m_Name: EnemySpawner
-  m_TagString: Untagged
+  m_TagString: Spawner
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -92,8 +92,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f76c3ae792a78f8428c9f5dd43b89fd9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_MinimumInterval: 1
-  m_MaximumInterval: 5
+  m_InitialWaveAmount: 1
+  m_WaveMultiplier: 1.5
+  m_MinimumSpawnInterval: 1
+  m_MaximumSpawnInterval: 5
 --- !u!136 &136050501895869294
 CapsuleCollider:
   m_ObjectHideFlags: 1

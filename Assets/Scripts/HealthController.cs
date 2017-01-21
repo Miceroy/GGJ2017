@@ -48,8 +48,14 @@ public class HealthController : MonoBehaviour
         else
         {
             GameController.instance().onEnemyDestroyed();
-            Destroy(gameObject);
-        m_scene.checkWaveEnd();
+            SendMessage("dying");
+            Invoke("destroyMe", 2.0f);
         }
+    }
+
+    void destroyMe()
+    {
+        Destroy(gameObject);
+        m_scene.checkWaveEnd();
     }
 }

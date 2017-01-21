@@ -62,7 +62,7 @@ public class WeaponController : MonoBehaviour
         if (Physics.Raycast(characterDirection.position, characterDirection.forward, out hit, 100f) && hit.transform.tag == "Enemy")
         {
             Instantiate(hitParticle, hit.point, Quaternion.identity);
-            hit.transform.GetComponent<HealthController>().applyDamage(m_gunDamageAmount);
+            hit.transform.gameObject.SendMessage("applyDamage", m_gunDamageAmount);
         }
     }
 

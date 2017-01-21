@@ -19,6 +19,7 @@ public class EnemySpawner : MonoBehaviour
 	void Start ()
     {
         m_currentSpawnAmount = m_InitialWaveAmount;
+        m_nextSpawnAt = m_MinimumSpawnInterval;
 	}
 	
 	// Update is called once per frame

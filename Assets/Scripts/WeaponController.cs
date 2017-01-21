@@ -59,10 +59,21 @@ public class WeaponController : MonoBehaviour
         smokeParticle.Play();
 
         RaycastHit hit;
-        if (Physics.Raycast(characterDirection.position, characterDirection.forward, out hit, 100f) && hit.transform.tag == "Enemy")
+        if (Physics.Raycast(characterDirection.position, characterDirection.forward, out hit, 100f) )
         {
-            Instantiate(hitParticle, hit.point, Quaternion.identity);
-            hit.transform.gameObject.SendMessage("applyDamage", m_gunDamageAmount);
+            if (hit.transform.tag == "Enemy")
+            {
+                Instantiate(hitParticle, hit.point, Quaternion.identity);
+                hit.transform.gameObject.SendMessage("applyDamage", m_gunDamageAmount);
+            }
+            else if (hit.transform.tag == "Head")
+            {
+                Debug.Log("Head shot!!");
+                Instantiate(hitParticle, hit.point, Quaternion.identity);
+                Instantiate(hitParticle, hit.point + new Vector3(0f,0.1f,0f), Quaternion.identity);
+                Instantiate(hitParticle, hit.point + new Vector3(0f, -0.1f, 0f), Quaternion.identity);
+                hit.transform.parent.SendMessage("applyDamage", 5.0f*m_gunDamageAmount);
+            }
         }
     }
 

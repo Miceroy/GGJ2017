@@ -86,7 +86,7 @@ public class EnemyController : MonoBehaviour
 
     void applyDamage(float dmg)
     {
-        Debug.Log("Apply animation damage");
+      //  Debug.Log("Apply animation damage");
         stopEnemy();
         animator.SetBool("TakeDamage",true);
         Invoke("disableDamageAnimation", 1.25f);
@@ -101,6 +101,11 @@ public class EnemyController : MonoBehaviour
     void dying()
     {
         stopEnemy();
+        playDead();
+    }
+
+    void playDead()
+    {
         animator.SetBool("KilledByBullet", true);
     }
 }

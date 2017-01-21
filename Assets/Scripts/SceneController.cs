@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class SceneController : MonoBehaviour
 {
-    public float m_WaveWaitTime = 20f;
+    public float m_WaveWaitTime = 10f;
 
     private bool m_waiting = true;
     private float m_WaveTimer = 0f;

@@ -38,12 +38,14 @@ public class EnemyController : MonoBehaviour
 
             m_pushTimer += Time.fixedDeltaTime;
 
-            if (Physics.Raycast(transform.position, Vector3.down, 1f))
+            if (Physics.Raycast(transform.position, Vector3.down * 2f, 2f))
             {
-                if (m_pushTimer >= 1.0f)
+                if (m_pushTimer >= 0.5f)
                 {
                     m_pushed = false;
                     GetComponent<HealthController>().applyDamage(25f);
+                    applyDamage(25f);
+
                     GetComponent<NavMeshAgent>().enabled = true;
                 }
             }
@@ -54,12 +56,15 @@ public class EnemyController : MonoBehaviour
             pos += m_pushMovement;
 
             if (!m_pushed)
-                pos.y = 1.3f;
+                pos.y = 1.5f;
 
             transform.position = pos;
 
             return;
         }
+
+        if (transform.position.y < -1000f)
+            Destroy(gameObject);
 
         if ((m_recalcTimer += Time.deltaTime) >= recalcThreshold)
         {

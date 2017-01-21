@@ -51,6 +51,4 @@ public class HealthController : MonoBehaviour
         m_scene.checkWaveEnd();
         }
     }
-
-
 }

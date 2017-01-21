@@ -6,6 +6,7 @@ using UnityStandardAssets.CrossPlatformInput;
 
 public class WeaponController : MonoBehaviour
 {
+    public GameObject smokeParticle;
     public GameObject hitParticle;
     public Transform characterDirection;
     public float m_cooldownTime = 1.0f;
@@ -51,6 +52,11 @@ public class WeaponController : MonoBehaviour
 
     void doShooting()
     {
+        // Gun smoke
+        Transform spawnPos = GameObject.FindGameObjectWithTag("GunSmokeSpawn").transform;
+        Transform go = Instantiate(smokeParticle, spawnPos.position, spawnPos.rotation).transform;
+        go.parent = go;
+
         RaycastHit hit;
         if (Physics.Raycast(characterDirection.position, characterDirection.forward, out hit, 100f) && hit.transform.tag == "Enemy")
         {

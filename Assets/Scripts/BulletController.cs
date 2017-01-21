@@ -9,7 +9,7 @@ public class BulletController : MonoBehaviour
 
     private float m_timer = 0f;
     private Vector3 m_direction;
-
+    
 	// Use this for initialization
 	void Start()
     {
@@ -20,6 +20,7 @@ public class BulletController : MonoBehaviour
 	void Update()
     {
         Vector3 nextStep = m_direction * m_Speed * Time.deltaTime;
+        bool destroy = false;
 
         RaycastHit hit;
         if (Physics.Raycast(transform.position, nextStep, out hit, nextStep.magnitude))
@@ -28,12 +29,15 @@ public class BulletController : MonoBehaviour
             if (health)
                 health.applyDamage(5f);
 
-            Destroy(gameObject);
+            destroy = true;
         }
         else
             transform.localPosition += nextStep;
 
         if ((m_timer += Time.deltaTime) >= m_LifeTime)
+            destroy = true;
+
+        if (destroy)
             Destroy(gameObject);
-	}
+    }
 }

@@ -238,42 +238,18 @@ Prefab:
     - target: {fileID: 224031995743977982, guid: 6ccdec4804364b84198957aa55d25824,
         type: 2}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224031995743977982, guid: 6ccdec4804364b84198957aa55d25824,
         type: 2}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224460049548697370, guid: 6ccdec4804364b84198957aa55d25824,
         type: 2}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 114858221917869574, guid: 6ccdec4804364b84198957aa55d25824,
-        type: 2}
-      propertyPath: m_FontData.m_Font
-      value: 
-      objectReference: {fileID: 12800000, guid: e0a3463e6da0e4f42a62dc66e0e99393,
-        type: 3}
-    - target: {fileID: 114843732812227088, guid: 6ccdec4804364b84198957aa55d25824,
-        type: 2}
-      propertyPath: m_FontData.m_Font
-      value: 
-      objectReference: {fileID: 12800000, guid: e0a3463e6da0e4f42a62dc66e0e99393,
-        type: 3}
-    - target: {fileID: 114607680366272060, guid: 6ccdec4804364b84198957aa55d25824,
-        type: 2}
-      propertyPath: m_FontData.m_Font
-      value: 
-      objectReference: {fileID: 12800000, guid: e0a3463e6da0e4f42a62dc66e0e99393,
-        type: 3}
-    - target: {fileID: 114999313648421520, guid: 6ccdec4804364b84198957aa55d25824,
-        type: 2}
-      propertyPath: m_FontData.m_Font
-      value: 
-      objectReference: {fileID: 12800000, guid: e0a3463e6da0e4f42a62dc66e0e99393,
-        type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6ccdec4804364b84198957aa55d25824, type: 2}
   m_IsPrefabParent: 0
@@ -321,11 +297,6 @@ Prefab:
     - target: {fileID: 4237381490754102, guid: 1e582476aefdfaf4a853498b41a11d33, type: 2}
       propertyPath: m_RootOrder
       value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 114250808513633038, guid: 1e582476aefdfaf4a853498b41a11d33,
-        type: 2}
-      propertyPath: m_ChargeFovOffset
-      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 1e582476aefdfaf4a853498b41a11d33, type: 2}

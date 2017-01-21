@@ -6,7 +6,7 @@ using UnityStandardAssets.CrossPlatformInput;
 
 public class WeaponController : MonoBehaviour
 {
-    public GameObject smokeParticle;
+    public ParticleSystem smokeParticle;
     public GameObject hitParticle;
     public Transform characterDirection;
     public float m_cooldownTime = 1.0f;
@@ -53,15 +53,27 @@ public class WeaponController : MonoBehaviour
     void doShooting()
     {
         // Gun smoke
-        Transform spawnPos = GameObject.FindGameObjectWithTag("GunSmokeSpawn").transform;
-        Transform go = Instantiate(smokeParticle, spawnPos.position, spawnPos.rotation).transform;
-        go.parent = go;
+        //  Transform spawnPos = GameObject.FindGameObjectWithTag("GunSmokeSpawn").transform;
+        //  Transform go = Instantiate(smokeParticle, spawnPos.position, spawnPos.rotation).transform;
+        //  go.parent = go;
+        smokeParticle.Play();
 
         RaycastHit hit;
-        if (Physics.Raycast(characterDirection.position, characterDirection.forward * 100f, out hit, 100f) && hit.transform.tag == "Enemy")
+        if (Physics.Raycast(characterDirection.position, characterDirection.forward, out hit, 100f) )
         {
-            Instantiate(hitParticle, hit.point, Quaternion.Inverse(Quaternion.LookRotation(hit.normal))).transform.SetParent(hit.transform, true);
-            hit.transform.GetComponent<HealthController>().applyDamage(m_gunDamageAmount);
+            if (hit.transform.tag == "Enemy")
+            {
+            	Instantiate(hitParticle, hit.point, Quaternion.Inverse(Quaternion.LookRotation(hit.normal))).transform.SetParent(hit.transform, true);
+                hit.transform.gameObject.SendMessage("applyDamage", m_gunDamageAmount);
+            }
+            else if (hit.transform.tag == "Head")
+            {
+                Debug.Log("Head shot!!");
+                Instantiate(hitParticle, hit.point, Quaternion.identity);
+                Instantiate(hitParticle, hit.point + new Vector3(0f,0.1f,0f), Quaternion.identity);
+                Instantiate(hitParticle, hit.point + new Vector3(0f, -0.1f, 0f), Quaternion.identity);
+                hit.transform.parent.SendMessage("applyDamage", 5.0f*m_gunDamageAmount);
+            }
         }
     }
 

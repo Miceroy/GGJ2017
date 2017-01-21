@@ -5,24 +5,28 @@ using UnityEngine.AI;
 
 public class EnemyController : MonoBehaviour
 {
+    public float m_shootRange = 20.0f;
+    private Animator animator;
     private float m_recalcTimer = 0f;
     private float m_shootTimer = 0f;
     private GameObject m_playerObject;
     private bool m_pushed = false;
+    float m_oldSpeed;
     private Vector3 m_pushMovement;
     private float m_pushTimer = 2f;
-
-	// Use this for initialization
-	void Start()
+   
+    // Use this for initialization
+    void Start()
     {
+        animator = GetComponent<Animator>();
         m_playerObject = GameObject.Find("FPSController");
-	}
-	
-	// Update is called once per frame
-	void FixedUpdate()
+    }
+
+    // Update is called once per frame
+    void Update()
     {
         const float recalcThreshold = 0.5f;
-        const float shootThreshold = 1f;
+        const float shootThreshold = 2.35f;
 
         if (m_pushed)
         {
@@ -61,14 +65,54 @@ public class EnemyController : MonoBehaviour
 
         if ((m_shootTimer += Time.deltaTime) >= shootThreshold)
         {
+            if (isInRange() && m_oldSpeed == 0.0f )
+            {
+                stopEnemy();
+                Invoke("playEnemy", 2.35f);
+                Invoke("shootBullet", 1.4f);
+                m_shootTimer -= shootThreshold;
+            }
+        }
+
+        if (m_oldSpeed > 0.0f)
+        {
             Vector3 toPlayer = m_playerObject.transform.position - transform.position;
+            gameObject.transform.rotation =
+                Quaternion.LookRotation(toPlayer.normalized);
+        }
+    }
 
-            RaycastHit hit;
-            if (Physics.Raycast(transform.position, toPlayer, out hit, toPlayer.magnitude) &&
-                hit.transform.name == "FPSController")
-                Instantiate(Resources.Load("Prefabs/Bullet", typeof(GameObject)), transform.position, transform.rotation);
+    void shootBullet()
+    {
+        RaycastHit hit;
+        Vector3 toPlayer = m_playerObject.transform.position - transform.position;
+        if (Physics.Raycast(transform.position, toPlayer, out hit, toPlayer.magnitude) &&
+            hit.transform.name == "FPSController")
+            Instantiate(Resources.Load("Prefabs/Bullet", typeof(GameObject)), transform.position, transform.rotation);
+    }
+    bool isInRange()
+    {
+        Vector3 toPlayer = m_playerObject.transform.position - transform.position;
+        bool res = toPlayer.magnitude <= m_shootRange;
+        animator.SetBool("EnemyInRange", res);
+        return res;
+    }
 
-            m_shootTimer -= shootThreshold;
+    void stopEnemy()
+    {
+        if (m_oldSpeed == 0.0f)
+        {
+            m_oldSpeed = GetComponent<NavMeshAgent>().speed;
+            GetComponent<NavMeshAgent>().speed = 0.0f;
+        }
+    }
+
+    void playEnemy()
+    {
+        if (m_oldSpeed > 0.0f)
+        {
+            GetComponent<NavMeshAgent>().speed = m_oldSpeed;
+            m_oldSpeed = 0.0f;
         }
     }
 
@@ -80,5 +124,30 @@ public class EnemyController : MonoBehaviour
         GetComponent<NavMeshAgent>().enabled = false;
         
         m_pushMovement = amount;
+    }
+
+    void applyDamage(float dmg)
+    {
+      //  Debug.Log("Apply animation damage");
+        stopEnemy();
+        animator.SetBool("TakeDamage",true);
+        Invoke("disableDamageAnimation", 1.25f);
+    }
+
+    void disableDamageAnimation()
+    {
+        playEnemy();
+        animator.SetBool("TakeDamage", false);
+    }
+
+    void dying()
+    {
+        stopEnemy();
+        playDead();
+    }
+
+    void playDead()
+    {
+        animator.SetBool("KilledByBullet", true);
     }
 }

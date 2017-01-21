@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityStandardAssets.Characters.FirstPerson;
 
 public class HealthController : MonoBehaviour {
     public float m_health = 100;
@@ -35,7 +36,17 @@ public class HealthController : MonoBehaviour {
 
     // Update is called once per frame
     void deleteMe()
-    {
-        Destroy(gameObject);
+    {   if (gameObject.tag == "Player")
+        {
+            GetComponent<WeaponController>().enabled = false;
+            GetComponent<FirstPersonController>().enabled = false;
+            GameController.instance().onGameOver();
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
+
+
 }

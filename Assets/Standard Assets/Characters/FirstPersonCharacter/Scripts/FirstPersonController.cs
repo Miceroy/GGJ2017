@@ -30,6 +30,9 @@ namespace UnityStandardAssets.Characters.FirstPerson
         [SerializeField] private AudioClip m_JumpSound;           // the sound played when character leaves the ground.
         [SerializeField] private AudioClip m_LandSound;           // the sound played when character touches back on ground.
         public Camera m_groundCamera;
+        public float m_FlyingFovOffset = 25f;
+        public float m_ChargeFovOffset = 25f;
+        public float m_FovLerpDelta = 0.1f;
 
         private Camera m_Camera;
         private bool m_Jump;
@@ -102,7 +105,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
             if (m_GravityMultiplier <= 0f && CrossPlatformInputManager.GetButtonDown("Fire2"))
             {
-                m_attackMult = 25f;
+                m_attackMult = m_ChargeFovOffset;
             }
 
             m_PreviouslyGrounded = m_CharacterController.isGrounded;
@@ -125,7 +128,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
            
             if (m_GravityMultiplier > 0.0f)
             {
-                m_Camera.fieldOfView = Mathf.Lerp(m_Camera.fieldOfView, m_initialFov, 0.1f);
+                m_Camera.fieldOfView = Mathf.Lerp(m_Camera.fieldOfView, m_initialFov, m_FovLerpDelta);
 
                 Vector3 desiredMove = transform.forward * m_Input.y + transform.right * m_Input.x;
                 // get a normal for the surface that is being touched to move along it
@@ -158,9 +161,9 @@ namespace UnityStandardAssets.Characters.FirstPerson
             }
             else
             {
-                float speedMult = Math.Max(1f, (m_attackMult -= Time.fixedDeltaTime * 25f));
+                float speedMult = Math.Max(1f, (m_attackMult -= Time.fixedDeltaTime *  m_ChargeFovOffset));
                 
-                m_Camera.fieldOfView = Mathf.Lerp(m_Camera.fieldOfView, m_initialFov + 25f + speedMult, 0.1f);
+                m_Camera.fieldOfView = Mathf.Lerp(m_Camera.fieldOfView, m_initialFov + m_FlyingFovOffset + speedMult, m_FovLerpDelta);
 
                 Vector3 desiredMove = forwardTransform.forward * m_Input.y + forwardTransform.right * m_Input.x;
                 m_MoveDir.x = desiredMove.x * speed * speedMult;

@@ -51,18 +51,11 @@ public class WeaponController : MonoBehaviour
 
     void doShooting()
     {
-        RaycastHit[] hits;
-        hits = Physics.RaycastAll(characterDirection.position, characterDirection.forward, 100.0F);
-        Debug.Log("hits.Length = " + hits.Length.ToString());
-        for (int i = 0; i < hits.Length; i++)
+        RaycastHit hit;
+        if (Physics.Raycast(characterDirection.position, characterDirection.forward, out hit, 100f) && hit.transform.tag == "Enemy")
         {
-            RaycastHit hit = hits[i];
             Instantiate(hitParticle, hit.point, Quaternion.identity);
-            HealthController health = hit.transform.GetComponent<HealthController>();
-            if( health != null)
-            {
-                health.applyDamage(m_gunDamageAmount);
-            }
+            hit.transform.GetComponent<HealthController>().applyDamage(m_gunDamageAmount);
         }
     }
 

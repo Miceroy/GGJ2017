@@ -69,6 +69,10 @@ public class WeaponController : MonoBehaviour
             else if (hit.transform.tag == "Head")
             {
                 Debug.Log("Head shot!!");
+                if (GameObject.FindGameObjectWithTag("HeadShotText"))
+                {
+                    GameObject.FindGameObjectWithTag("HeadShotText").GetComponent<TextNotifier>().show();
+                }
                 Instantiate(hitParticle, hit.point, Quaternion.identity);
                 Instantiate(hitParticle, hit.point + new Vector3(0f,0.1f,0f), Quaternion.identity);
                 Instantiate(hitParticle, hit.point + new Vector3(0f, -0.1f, 0f), Quaternion.identity);

@@ -13,11 +13,13 @@ public class EnemyController : MonoBehaviour
     private bool m_pushed = false;
     float m_oldSpeed;
     private Vector3 m_pushMovement;
+    bool m_enableShooting;
     private float m_pushTimer = 2f;
    
     // Use this for initialization
     void Start()
     {
+        m_enableShooting = true;
         animator = GetComponent<Animator>();
         m_playerObject = GameObject.Find("FPSController");
     }
@@ -77,19 +79,23 @@ public class EnemyController : MonoBehaviour
         if (m_oldSpeed > 0.0f)
         {
             Vector3 toPlayer = m_playerObject.transform.position - transform.position;
-            gameObject.transform.rotation =
-                Quaternion.LookRotation(toPlayer.normalized);
+            toPlayer.y = 0;
+            gameObject.transform.rotation = Quaternion.LookRotation(toPlayer.normalized);
         }
     }
 
     void shootBullet()
     {
-        RaycastHit hit;
-        Vector3 toPlayer = m_playerObject.transform.position - transform.position;
-        if (Physics.Raycast(transform.position, toPlayer, out hit, toPlayer.magnitude) &&
-            hit.transform.name == "FPSController")
-            Instantiate(Resources.Load("Prefabs/Bullet", typeof(GameObject)), transform.position, transform.rotation);
+        if (m_enableShooting)
+        {
+            RaycastHit hit;
+            Vector3 toPlayer = m_playerObject.transform.position - transform.position;
+            if (Physics.Raycast(transform.position, toPlayer, out hit, toPlayer.magnitude) &&
+                hit.transform.name == "FPSController")
+                Instantiate(Resources.Load("Prefabs/Bullet", typeof(GameObject)), transform.position, transform.rotation);
+        }
     }
+
     bool isInRange()
     {
         Vector3 toPlayer = m_playerObject.transform.position - transform.position;
@@ -109,6 +115,7 @@ public class EnemyController : MonoBehaviour
 
     void playEnemy()
     {
+        m_enableShooting = true;
         if (m_oldSpeed > 0.0f)
         {
             GetComponent<NavMeshAgent>().speed = m_oldSpeed;
@@ -128,7 +135,8 @@ public class EnemyController : MonoBehaviour
 
     void applyDamage(float dmg)
     {
-      //  Debug.Log("Apply animation damage");
+        //  Debug.Log("Apply animation damage");
+        m_enableShooting = false;
         stopEnemy();
         animator.SetBool("TakeDamage",true);
         Invoke("disableDamageAnimation", 1.25f);
@@ -137,6 +145,7 @@ public class EnemyController : MonoBehaviour
     void disableDamageAnimation()
     {
         playEnemy();
+        m_enableShooting = true;
         animator.SetBool("TakeDamage", false);
     }
 
@@ -151,3 +160,4 @@ public class EnemyController : MonoBehaviour
         animator.SetBool("KilledByBullet", true);
     }
 }
+

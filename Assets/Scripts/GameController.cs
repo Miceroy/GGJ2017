@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityStandardAssets.Characters.FirstPerson;
 
 public class GameController : MonoBehaviour {
     public GameObject gameOverObject;
@@ -58,15 +59,19 @@ public class GameController : MonoBehaviour {
 
     void Update()
     {
-        // Increase stamina
-        GameObject hb = GameObject.FindGameObjectWithTag("StaminaBar");
-        if (hb != null)
+        bool isGrounded = GameObject.FindGameObjectWithTag("Player").GetComponent<CharacterController>().isGrounded;
+        if (isGrounded)
         {
-            HealthBarController hbc = hb.GetComponent<HealthBarController>();
-            m_stamina += m_staminaIncreaseSpeed * Time.deltaTime;
-            if (m_stamina > m_maxStamina)
-                m_stamina = m_maxStamina;
-            hbc.setValue(m_stamina, m_maxStamina);
+            // Increase stamina
+            GameObject hb = GameObject.FindGameObjectWithTag("StaminaBar");
+            if (hb != null)
+            {
+                HealthBarController hbc = hb.GetComponent<HealthBarController>();
+                m_stamina += m_staminaIncreaseSpeed * Time.deltaTime;
+                if (m_stamina > m_maxStamina)
+                    m_stamina = m_maxStamina;
+                hbc.setValue(m_stamina, m_maxStamina);
+            }
         }
     }
 }

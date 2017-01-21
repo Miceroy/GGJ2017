@@ -54,4 +54,4 @@ MonoBehaviour:
   gameOverObject: {fileID: 0}
   scoreText: {fileID: 0}
   m_maxStamina: 5
-  m_staminaIncreaseSpeed: 0.5
+  m_staminaIncreaseSpeed: 1

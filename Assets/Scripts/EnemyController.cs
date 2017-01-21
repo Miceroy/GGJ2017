@@ -37,7 +37,7 @@ public class EnemyController : MonoBehaviour
             m_pushMovement.z *= 0.75f * Time.fixedDeltaTime;
 
             m_pushTimer += Time.fixedDeltaTime;
-            
+
             if (Physics.Raycast(transform.position, Vector3.down, 1f))
             {
                 if (m_pushTimer >= 1.0f)
@@ -47,6 +47,8 @@ public class EnemyController : MonoBehaviour
                     GetComponent<NavMeshAgent>().enabled = true;
                 }
             }
+            if (Physics.Raycast(transform.position, Vector3.up, 1f))
+                m_pushMovement.y = 0f;
 
             Vector3 pos = transform.position;
             pos += m_pushMovement;

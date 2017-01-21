@@ -8,6 +8,8 @@ TagManager:
   - Spawner
   - HealthBar
   - StaminaBar
+  - GroundCamera
+  - FlyCamera
   layers:
   - Default
   - TransparentFX

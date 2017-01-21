@@ -76,6 +76,7 @@ GameObject:
   - component: {fileID: 4006437724989382}
   - component: {fileID: 20217065634276106}
   - component: {fileID: 124723979467214982}
+  - component: {fileID: 114728666265020154}
   m_Layer: 0
   m_Name: FlyCamera
   m_TagString: FlyCamera
@@ -186,7 +187,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 142
+  field of view: 135
   orthographic: 0
   orthographic size: 5
   m_Depth: 0
@@ -473,6 +474,20 @@ MonoBehaviour:
   m_LandSound: {fileID: 8300000, guid: 3b09d59f4499d45428baa7a21e954296, type: 3}
   m_flyCamera: {fileID: 20217065634276106}
   m_groundCamera: {fileID: 20915107913918660}
+--- !u!114 &114728666265020154
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1249355736344894}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4739c22ef73ad62488fe344c8fe9addd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  strengthX: 0.62
+  strengthY: 0.61
+  fishEyeShader: {fileID: 4800000, guid: 874ceab4425f64bccb1d14032f4452b1, type: 3}
 --- !u!114 &114919703463437968
 MonoBehaviour:
   m_ObjectHideFlags: 1

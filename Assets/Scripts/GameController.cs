@@ -52,25 +52,33 @@ public class GameController : MonoBehaviour {
         
     }
 
-    void startGame()
+    public void startGame()
     {
         SceneManager.LoadScene("Scenes/GameScene");
     }
 
+    public void exit()
+    {
+        Application.Quit();
+    }
+
     void Update()
     {
-        bool isGrounded = GameObject.FindGameObjectWithTag("Player").GetComponent<CharacterController>().isGrounded;
-        if (isGrounded)
+        if (GameObject.FindGameObjectWithTag("Player"))
         {
-            // Increase stamina
-            GameObject hb = GameObject.FindGameObjectWithTag("StaminaBar");
-            if (hb != null)
+            bool isGrounded = GameObject.FindGameObjectWithTag("Player").GetComponent<CharacterController>().isGrounded;
+            if (isGrounded)
             {
-                HealthBarController hbc = hb.GetComponent<HealthBarController>();
-                m_stamina += m_staminaIncreaseSpeed * Time.deltaTime;
-                if (m_stamina > m_maxStamina)
-                    m_stamina = m_maxStamina;
-                hbc.setValue(m_stamina, m_maxStamina);
+                // Increase stamina
+                GameObject hb = GameObject.FindGameObjectWithTag("StaminaBar");
+                if (hb != null)
+                {
+                    HealthBarController hbc = hb.GetComponent<HealthBarController>();
+                    m_stamina += m_staminaIncreaseSpeed * Time.deltaTime;
+                    if (m_stamina > m_maxStamina)
+                        m_stamina = m_maxStamina;
+                    hbc.setValue(m_stamina, m_maxStamina);
+                }
             }
         }
     }

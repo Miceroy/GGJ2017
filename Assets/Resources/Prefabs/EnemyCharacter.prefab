@@ -41,6 +41,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1035246148416576
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4167281956217370}
+  - component: {fileID: 136995266809850192}
+  m_Layer: 0
+  m_Name: Headshot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1047517505157134
 GameObject:
   m_ObjectHideFlags: 0
@@ -510,6 +526,19 @@ Transform:
   m_Father: {fileID: 4687979111235664}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4167281956217370
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1035246148416576}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4687979111235664}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4252063137685580
 Transform:
   m_ObjectHideFlags: 1
@@ -660,10 +689,11 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1123157678968738}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 7.427}
+  m_LocalPosition: {x: 0, y: 1.27, z: -9.92}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4137667576205576}
+  - {fileID: 4167281956217370}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -924,9 +954,22 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.5
-  m_Height: 2.14
+  m_Height: 1.92
   m_Direction: 1
-  m_Center: {x: 0, y: 1.1, z: 0}
+  m_Center: {x: 0, y: 0.75, z: 0}
+--- !u!136 &136995266809850192
+CapsuleCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1035246148416576}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.22
+  m_Height: 0.7
+  m_Direction: 1
+  m_Center: {x: 0, y: 1.95, z: 0}
 --- !u!137 &137675331860432526
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1

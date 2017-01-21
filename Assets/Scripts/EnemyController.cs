@@ -5,6 +5,7 @@ using UnityEngine.AI;
 
 public class EnemyController : MonoBehaviour
 {
+    public float m_shootRange = 20.0f;
     private Animator animator;
     private float m_recalcTimer = 0f;
     private float m_shootTimer = 0f;
@@ -32,15 +33,26 @@ public class EnemyController : MonoBehaviour
 
         if ((m_shootTimer += Time.deltaTime) >= shootThreshold)
         {
-            Vector3 toPlayer = m_playerObject.transform.position - transform.position;
+            if (isInRange())
+            {
+                Vector3 toPlayer = m_playerObject.transform.position - transform.position;
 
-            RaycastHit hit;
-            if (Physics.Raycast(transform.position, toPlayer, out hit, toPlayer.magnitude) &&
-                hit.transform.name == "FPSController")
-                Instantiate(Resources.Load("Prefabs/Bullet", typeof(GameObject)), transform.position, transform.rotation);
+                RaycastHit hit;
+                if (Physics.Raycast(transform.position, toPlayer, out hit, toPlayer.magnitude) &&
+                    hit.transform.name == "FPSController")
+                    Instantiate(Resources.Load("Prefabs/Bullet", typeof(GameObject)), transform.position, transform.rotation);
 
-            m_shootTimer -= shootThreshold;
+                m_shootTimer -= shootThreshold;
+            }
         }
+    }
+
+    bool isInRange()
+    {
+        Vector3 toPlayer = m_playerObject.transform.position - transform.position;
+        bool res = toPlayer.magnitude <= m_shootRange;
+        animator.SetBool("EnemyInRange", res);
+        return res;
     }
 
     void stopEnemy()

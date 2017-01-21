@@ -167,8 +167,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1190758538464614}
-  m_LocalRotation: {x: -0, y: 0.70710677, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -7.167, y: 1.56, z: -6.37}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 3.43, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4836998368390558}
@@ -443,7 +443,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca992fd26fedd914f922347fec25cbb4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pyssy: {fileID: 4824934419100114}
   smokeParticle: {fileID: 198845570824371948}
+  bulletPrefab: {fileID: 1060380164972228, guid: 930bd99ae1760e44ba104126a727f5f4,
+    type: 2}
   hitParticle: {fileID: 1145483045471784, guid: cc625308a8fc1004fb10531710df3df8,
     type: 2}
   characterDirection: {fileID: 4118031494408786}

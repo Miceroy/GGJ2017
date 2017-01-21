@@ -6,7 +6,9 @@ using UnityStandardAssets.CrossPlatformInput;
 
 public class WeaponController : MonoBehaviour
 {
+    public Transform pyssy;
     public ParticleSystem smokeParticle;
+    public GameObject bulletPrefab;
     public GameObject hitParticle;
     public Transform characterDirection;
     public float m_cooldownTime = 1.0f;
@@ -57,7 +59,8 @@ public class WeaponController : MonoBehaviour
         //  Transform go = Instantiate(smokeParticle, spawnPos.position, spawnPos.rotation).transform;
         //  go.parent = go;
         smokeParticle.Play();
-
+       // Vector3 offset = Quaternion.Inverse(characterDirection.rotation) * new Vector3(0.4f, -0.4f, 0.0f);
+        Instantiate(bulletPrefab, pyssy.position, pyssy.rotation);
         RaycastHit hit;
         if (Physics.Raycast(characterDirection.position, characterDirection.forward, out hit, 100f) )
         {
@@ -74,8 +77,8 @@ public class WeaponController : MonoBehaviour
                     GameObject.FindGameObjectWithTag("HeadShotText").GetComponent<TextNotifier>().show();
                 }
                 Instantiate(hitParticle, hit.point, Quaternion.identity);
-                Instantiate(hitParticle, hit.point + new Vector3(0f,0.1f,0f), Quaternion.identity);
-                Instantiate(hitParticle, hit.point + new Vector3(0f, -0.1f, 0f), Quaternion.identity);
+                Instantiate(hitParticle, hit.point + new Vector3(0.1f, 0.1f,  0.1f), Quaternion.identity);
+                Instantiate(hitParticle, hit.point + new Vector3(-0.1f, -0.1f, -0.1f), Quaternion.identity);
                 hit.transform.parent.SendMessage("applyDamage", 5.0f*m_gunDamageAmount);
             }
         }

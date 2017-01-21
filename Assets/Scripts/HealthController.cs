@@ -47,6 +47,7 @@ public class HealthController : MonoBehaviour
         }
         else
         {
+            GameController.instance().onEnemyDestroyed();
             Destroy(gameObject);
         m_scene.checkWaveEnd();
         }

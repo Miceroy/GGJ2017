@@ -164,6 +164,7 @@ public class EnemyController : MonoBehaviour
 
     void playDead()
     {
+        GetComponent<NavMeshAgent>().speed = 0.0f;
         animator.SetBool("KilledByBullet", true);
     }
 }

@@ -12,6 +12,7 @@ TagManager:
   - FlyCamera
   - GunSmokeSpawn
   - Head
+  - HeadShotText
   layers:
   - Default
   - TransparentFX

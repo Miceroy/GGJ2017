@@ -109,12 +109,19 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
             if (m_GravityMultiplier <= 0f && CrossPlatformInputManager.GetButtonDown("Fire2"))
             {
+                GameObject hb = GameObject.Find("GameController");
+
                 m_attackMult = m_ChargeSpeedOffset;
+                hb.SendMessage("emptyStaminaIfHalf");
             }
 
             m_PreviouslyGrounded = m_CharacterController.isGrounded;
         }
 
+        public void resetAttackMult()
+        {
+            m_attackMult = 1f;
+        }
 
         private void PlayLandingSound()
         {

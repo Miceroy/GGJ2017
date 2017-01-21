@@ -18,6 +18,17 @@ public class GameController : MonoBehaviour {
         return m_stamina;
     }
 
+    public void emptyStaminaIfHalf()
+    {
+        if (m_stamina >= m_maxStamina * 0.5f)
+        {
+            m_stamina -= m_maxStamina * 0.5f;
+
+        }
+        else
+            FindObjectOfType<FirstPersonController>().resetAttackMult();
+    }
+
     public void decreaseStamina(float speed)
     {
         // Increase stamina

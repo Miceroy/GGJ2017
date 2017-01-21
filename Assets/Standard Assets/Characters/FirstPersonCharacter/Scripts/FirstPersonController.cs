@@ -146,6 +146,10 @@ namespace UnityStandardAssets.Characters.FirstPerson
                 m_MoveDir.y = desiredMove.y * speed;
                 m_MoveDir.z = desiredMove.z * speed;
                 Debug.Log("Flying = " + m_MoveDir.ToString());
+                m_MoveDir.y += m_JumpSpeed;
+                PlayJumpSound();
+                m_Jump = false;
+                m_Jumping = true;
                 m_CollisionFlags = m_CharacterController.Move(m_MoveDir * Time.fixedDeltaTime);
             }
             ProgressStepCycle(speed);

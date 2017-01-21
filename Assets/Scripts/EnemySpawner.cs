@@ -49,7 +49,6 @@ public class EnemySpawner : MonoBehaviour
                 return;
 
             m_spawnsRemaining = (uint)Mathf.Ceil(m_currentSpawnAmount *= m_WaveMultiplier);
-            Debug.Log(m_spawnsRemaining);
             m_spawning = true;
         }
     }

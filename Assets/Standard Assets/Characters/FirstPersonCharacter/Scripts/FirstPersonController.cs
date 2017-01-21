@@ -4,6 +4,7 @@ using UnityStandardAssets.CrossPlatformInput;
 using UnityStandardAssets.Utility;
 using Random = UnityEngine.Random;
 
+
 namespace UnityStandardAssets.Characters.FirstPerson
 {
     [RequireComponent(typeof (CharacterController))]
@@ -31,7 +32,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
         [SerializeField] private AudioClip m_LandSound;           // the sound played when character touches back on ground.
      //   public Camera m_groundCamera;
         public float m_FlyingFovOffset = 25f;
-        public float m_ChargeFovOffset = 25f;
+        public float m_ChargeSpeedOffset = 10f;
         public float m_FovLerpDelta = 0.1f;
 
         private Camera m_Camera;
@@ -50,6 +51,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
         private float m_GravityMultiplierTemp;
         private float m_attackMult;
         private float m_initialFov;
+        private float m_chargeTimer = 0f;
 
         // Use this for initialization
         private void Start()
@@ -84,6 +86,8 @@ namespace UnityStandardAssets.Characters.FirstPerson
         // Update is called once per frame
         private void Update()
         {
+            m_chargeTimer -= Time.deltaTime;
+
             RotateView();
             // the jump state needs to read here to make sure it is not missed
             if (!m_Jump)
@@ -105,7 +109,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
             if (m_GravityMultiplier <= 0f && CrossPlatformInputManager.GetButtonDown("Fire2"))
             {
-                m_attackMult = m_ChargeFovOffset;
+                m_attackMult = m_ChargeSpeedOffset;
             }
 
             m_PreviouslyGrounded = m_CharacterController.isGrounded;
@@ -161,7 +165,31 @@ namespace UnityStandardAssets.Characters.FirstPerson
             }
             else
             {
-                float speedMult = Math.Max(1f, (m_attackMult -= Time.fixedDeltaTime *  m_ChargeFovOffset));
+                float speedMult = Math.Max(1f, (m_attackMult -= Time.fixedDeltaTime *  m_ChargeSpeedOffset));
+
+                if (speedMult > 1f && m_chargeTimer <= 0f)
+                {
+                    RaycastHit hit;
+                    if (Physics.Raycast(transform.position, forwardTransform.forward, out hit, 2f))
+                    {
+                        GameObject[] objs = GameObject.FindGameObjectsWithTag("Enemy");
+
+                        foreach (GameObject enem in objs)
+                        {
+                            Vector3 toEnemy = enem.transform.position - transform.position;
+                            float mag = toEnemy.magnitude;
+
+                            if (mag < 5f)
+                            {
+                                toEnemy = toEnemy.normalized * (5f - toEnemy.magnitude);
+                                toEnemy.y = 0.5f;
+
+                                enem.transform.SendMessage("pushBack", toEnemy);
+                            }
+                        }
+                        
+                    }
+                }
                 
                 m_Camera.fieldOfView = Mathf.Lerp(m_Camera.fieldOfView, m_initialFov + m_FlyingFovOffset + speedMult, m_FovLerpDelta);
 
@@ -169,12 +197,6 @@ namespace UnityStandardAssets.Characters.FirstPerson
                 m_MoveDir.x = desiredMove.x * speed * speedMult;
                 m_MoveDir.y = desiredMove.y * speed * speedMult;
                 m_MoveDir.z = desiredMove.z * speed * speedMult;
-                Debug.Log("Flying = " + m_MoveDir.ToString());
-              //  m_MoveDir.y += m_JumpSpeed;
-            //    PlayJumpSound();
-                /*
-                m_Jump = false;
-                m_Jumping = true;*/
                 m_CollisionFlags = m_CharacterController.Move(m_MoveDir * Time.fixedDeltaTime);
             }
             ProgressStepCycle(speed);

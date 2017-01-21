@@ -58,9 +58,9 @@ public class WeaponController : MonoBehaviour
         go.parent = go;
 
         RaycastHit hit;
-        if (Physics.Raycast(characterDirection.position, characterDirection.forward, out hit, 100f) && hit.transform.tag == "Enemy")
+        if (Physics.Raycast(characterDirection.position, characterDirection.forward * 100f, out hit, 100f) && hit.transform.tag == "Enemy")
         {
-            Instantiate(hitParticle, hit.point, Quaternion.identity);
+            Instantiate(hitParticle, hit.point, Quaternion.Inverse(Quaternion.LookRotation(hit.normal))).transform.SetParent(hit.transform, true);
             hit.transform.GetComponent<HealthController>().applyDamage(m_gunDamageAmount);
         }
     }

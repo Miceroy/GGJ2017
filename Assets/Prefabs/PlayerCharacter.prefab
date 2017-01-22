@@ -632,6 +632,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bloodTexture: {fileID: 0}
+  m_hitSound: {fileID: 8300000, guid: 18ec3a2f9c34bc24e994e91d6ae0707a, type: 3}
   m_health: 100
 --- !u!136 &136889685535252398
 CapsuleCollider:

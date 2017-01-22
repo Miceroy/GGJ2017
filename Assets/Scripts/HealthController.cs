@@ -6,7 +6,9 @@ using UnityStandardAssets.Characters.FirstPerson;
 public class HealthController : MonoBehaviour
 {
     public GameObject bloodTexture;
+    public AudioClip m_hitSound;
 
+    private AudioSource m_AudioSource;
     public float m_health = 100;
 
     private float m_maxHealth;
@@ -14,6 +16,7 @@ public class HealthController : MonoBehaviour
 
     void Start()
     {
+        m_AudioSource = GetComponent<AudioSource>();
         m_scene = FindObjectOfType<SceneController>();
         m_maxHealth = m_health;
     }
@@ -40,6 +43,11 @@ public class HealthController : MonoBehaviour
             Invoke("disableBlood", 0.2f + ((1.0f-(m_health/m_maxHealth)) * 1.0f));
         }
 
+        if (m_hitSound != null && m_AudioSource != null)
+        {
+            m_AudioSource.clip = m_hitSound;
+            m_AudioSource.Play();
+        }
         if (gameObject.tag == "Player")
         {
             GameObject hb = GameObject.FindGameObjectWithTag("HealthBar");

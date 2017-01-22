@@ -52,7 +52,7 @@ public class GameController : MonoBehaviour {
     public void onGameOver()
     {
         gameOverObject.SetActive(true);
-        Invoke("startGame", 5.0f);
+        Invoke("loadMainMenu", 5.0f);
     }
 
     public void onEnemyDestroyed()
@@ -61,6 +61,11 @@ public class GameController : MonoBehaviour {
         scoreText.text = "Score: " + m_score.ToString();
 
         
+    }
+
+    public void loadMainMenu()
+    {
+        SceneManager.LoadScene("Scenes/MainMenuScene");
     }
 
     public void startGame()

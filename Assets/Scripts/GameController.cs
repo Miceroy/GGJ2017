@@ -88,6 +88,7 @@ public class GameController : MonoBehaviour {
     {
         if (Application.loadedLevelName == "MainMenuScene")
         {
+            Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
         }
 

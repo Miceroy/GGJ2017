@@ -74,6 +74,7 @@ GameObject:
   - component: {fileID: 4118031494408786}
   - component: {fileID: 81686391691738966}
   - component: {fileID: 20743132283203828}
+  - component: {fileID: 114348716920172780}
   m_Layer: 0
   m_Name: FirstPersonCharacter
   m_TagString: MainCamera
@@ -620,6 +621,26 @@ MonoBehaviour:
   m_FlyingFovOffset: 25
   m_ChargeSpeedOffset: 10
   m_FovLerpDelta: 0.1
+--- !u!114 &114348716920172780
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1294336998743110}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0923359e9e352a4b9b11c7b7161ad67, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Radius: 0.246
+  m_SampleCount: 2
+  m_OcclusionIntensity: 3.01
+  m_Blur: 2
+  m_Downsampling: 2
+  m_OcclusionAttenuation: 1
+  m_MinZ: 0.01
+  m_SSAOShader: {fileID: 4800000, guid: 43ca18288c424f645aaa1e9e07f04c50, type: 3}
+  m_RandomTexture: {fileID: 2800000, guid: a181ca8e3c62f3e4b8f183f6c586b032, type: 3}
 --- !u!114 &114919703463437968
 MonoBehaviour:
   m_ObjectHideFlags: 1

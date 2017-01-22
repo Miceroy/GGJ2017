@@ -65,9 +65,13 @@ public class EnemyController : MonoBehaviour
         {
             if (isInRange() && m_oldSpeed == 0.0f)
             {
-                stopEnemy();
-                Invoke("playEnemy", 2.35f);
-                Invoke("shootBullet", 1.4f);
+                if (m_pushed == false)
+                {
+                    stopEnemy();
+                    Invoke("playEnemy", 2.35f);
+                    Invoke("shootBullet", 1.4f);
+                }
+
                 m_shootTimer -= shootThreshold;
             }
         }

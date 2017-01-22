@@ -184,7 +184,15 @@ namespace UnityStandardAssets.Characters.FirstPerson
                     RaycastHit hit;
                     if (Physics.Raycast(transform.position, forwardTransform.forward, out hit, 2f))
                     {
+                        m_chargeTimer = 1f;
+
                         GameObject[] objs = GameObject.FindGameObjectsWithTag("Enemy");
+
+                        GameObject part = GameObject.Find("ShockwaveEmitter");
+                        Vector3 pos = transform.position;
+                        pos.y = 0.1f;
+                        part.transform.position = pos;
+                        part.GetComponent<ParticleSystem>().Play();
 
                         foreach (GameObject enem in objs)
                         {

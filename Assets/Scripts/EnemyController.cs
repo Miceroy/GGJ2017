@@ -77,7 +77,7 @@ public class EnemyController : MonoBehaviour
             if (isInRange() && m_oldSpeed == 0.0f )
             {
                 stopEnemy();
-                Invoke("playEnemy", 2.35f);
+                //Invoke("playEnemy", 2.35f);
                 Invoke("shootBullet", 1.4f);
                 m_shootTimer -= shootThreshold;
             }
@@ -151,7 +151,7 @@ public class EnemyController : MonoBehaviour
 
     void disableDamageAnimation()
     {
-        playEnemy();
+        //playEnemy();
         m_enableShooting = true;
         animator.SetBool("TakeDamage", false);
     }

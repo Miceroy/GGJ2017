@@ -37,6 +37,11 @@ public class HealthController : MonoBehaviour
         }
     }
 
+    public bool dead()
+    {
+        return m_health > 0f;
+    }
+
     // Update is called once per frame
     void deleteMe()
     {   if (gameObject.tag == "Player")

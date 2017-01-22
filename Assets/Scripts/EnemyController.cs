@@ -11,11 +11,11 @@ public class EnemyController : MonoBehaviour
     private float m_shootTimer = 0f;
     private GameObject m_playerObject;
     private bool m_pushed = false;
-    float m_oldSpeed;
     private Vector3 m_pushMovement;
     bool m_enableShooting;
-    private float m_pushTimer = 2f;
-   
+    private float m_pushTimer = 0f;
+    float m_oldSpeed;
+
     // Use this for initialization
     void Start()
     {
@@ -32,31 +32,20 @@ public class EnemyController : MonoBehaviour
 
         if (m_pushed)
         {
-            m_pushMovement.y -= Time.fixedDeltaTime;
-            m_pushMovement.x *= 0.75f * Time.fixedDeltaTime;
-            m_pushMovement.z *= 0.75f * Time.fixedDeltaTime;
+            m_pushMovement.x *= (1f - Time.fixedDeltaTime * 2f);
+            m_pushMovement.z *= (1f - Time.fixedDeltaTime * 2f);
 
             m_pushTimer += Time.fixedDeltaTime;
 
-            if (Physics.Raycast(transform.position, Vector3.down * 2f, 2f))
+            if (m_pushTimer >= 3.9f)
             {
-                if (m_pushTimer >= 0.5f)
-                {
-                    m_pushed = false;
-                    GetComponent<HealthController>().applyDamage(25f);
-                    applyDamage(25f);
-
-                    GetComponent<NavMeshAgent>().enabled = true;
-                }
+                m_pushed = false;
+                GetComponent<HealthController>().applyDamage(25f);
+                GetComponent<NavMeshAgent>().enabled = true;
             }
-            if (Physics.Raycast(transform.position, Vector3.up, 1f))
-                m_pushMovement.y = 0f;
 
             Vector3 pos = transform.position;
             pos += m_pushMovement;
-
-            if (!m_pushed)
-                pos.y = 1.5f;
 
             transform.position = pos;
 
@@ -66,7 +55,7 @@ public class EnemyController : MonoBehaviour
         if (transform.position.y < -1000f)
             Destroy(gameObject);
 
-        if ((m_recalcTimer += Time.deltaTime) >= recalcThreshold)
+        if ((m_recalcTimer += Time.deltaTime) >= recalcThreshold && GetComponent<NavMeshAgent>().enabled)
         {
             GetComponent<NavMeshAgent>().SetDestination(m_playerObject.transform.position);
             m_recalcTimer -= recalcThreshold;
@@ -74,7 +63,7 @@ public class EnemyController : MonoBehaviour
 
         if ((m_shootTimer += Time.deltaTime) >= shootThreshold)
         {
-            if (isInRange() && m_oldSpeed == 0.0f )
+            if (isInRange() && m_oldSpeed == 0.0f)
             {
                 stopEnemy();
                 Invoke("playEnemy", 2.35f);
@@ -136,7 +125,9 @@ public class EnemyController : MonoBehaviour
         m_pushTimer = 0f;
 
         GetComponent<NavMeshAgent>().enabled = false;
-        
+        animator.SetBool("BlastWave", true);
+        Invoke("restoreEnemy", 1.95f);
+
         m_pushMovement = amount;
     }
 
@@ -156,6 +147,13 @@ public class EnemyController : MonoBehaviour
         animator.SetBool("TakeDamage", false);
     }
 
+    void restoreEnemy()
+    {
+        playEnemy();
+        m_enableShooting = true;
+        animator.SetBool("BlastWave", false);
+    }
+
     void dying()
     {
         stopEnemy();
@@ -164,7 +162,7 @@ public class EnemyController : MonoBehaviour
 
     void playDead()
     {
-        GetComponent<NavMeshAgent>().speed = 0.0f;
+        GetComponent<NavMeshAgent>().enabled = false;
         animator.SetBool("KilledByBullet", true);
     }
 }

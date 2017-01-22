@@ -21,12 +21,30 @@ public class SceneController : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
-		if (m_waiting && (m_WaveTimer -= Time.deltaTime) <= 0f)
+		if (m_waiting)
         {
-            foreach (EnemySpawner spawner in m_spawners)
-                spawner.spawning = true;
+            Text inboundText = GameObject.Find("WaveInboundText").GetComponent<Text>();
 
-            m_waiting = false;
+            const float fadeTime = 1f;
+            const float half = fadeTime * 0.5f;
+
+            if ((m_WaveTimer -= Time.deltaTime) <= fadeTime)
+            {
+                inboundText.enabled = true;
+                inboundText.text = "Wave inbound!";
+
+                Color col = inboundText.color;
+                col.a = m_WaveTimer * half;
+                inboundText.color = col;
+            }
+            if (m_WaveTimer <= 0f)
+            {
+                foreach (EnemySpawner spawner in m_spawners)
+                    spawner.spawning = true;
+
+                m_waiting = false;
+                inboundText.enabled = false;
+            }
         }
 
         Text text = GameObject.Find("WaveTimerText").GetComponent<Text>();

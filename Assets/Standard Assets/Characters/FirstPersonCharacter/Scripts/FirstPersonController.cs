@@ -34,6 +34,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
         public float m_FlyingFovOffset = 25f;
         public float m_ChargeSpeedOffset = 10f;
         public float m_FovLerpDelta = 0.1f;
+        public float m_ChargeShockwaveRange = 8f;
 
         private Camera m_Camera;
         private bool m_Jump;
@@ -205,7 +206,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
                             Vector3 toEnemy = enem.transform.position - transform.position;
                             float mag = toEnemy.magnitude;
 
-                            if (mag < 5f)
+                            if (mag < m_ChargeShockwaveRange)
                             {
                                 enem.transform.SendMessage("pushBack");
                             }

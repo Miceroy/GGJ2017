@@ -24,6 +24,7 @@ public class WeaponController : MonoBehaviour
 
     void enableShooting()
     {
+        pyssy.GetComponent<Animator>().SetBool("ShotFired", false);
         m_canShoot = true;
     }
 
@@ -59,6 +60,9 @@ public class WeaponController : MonoBehaviour
         //  Transform go = Instantiate(smokeParticle, spawnPos.position, spawnPos.rotation).transform;
         //  go.parent = go;
         smokeParticle.Play();
+
+        pyssy.GetComponent<Animator>().SetBool("ShotFired", true);
+
        // Vector3 offset = Quaternion.Inverse(characterDirection.rotation) * new Vector3(0.4f, -0.4f, 0.0f);
         Instantiate(bulletPrefab, pyssy.position, pyssy.rotation);
         RaycastHit hit;

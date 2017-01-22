@@ -392,7 +392,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -499,6 +499,7 @@ MonoBehaviour:
   characterDirection: {fileID: 4118031494408786}
   m_cooldownTime: 1
   m_gunDamageAmount: 50
+  m_shootSound: {fileID: 8300000, guid: 6bf51db39b8b6f24dadb5d812f8458dc, type: 3}
 --- !u!114 &114214430847137276
 MonoBehaviour:
   m_ObjectHideFlags: 1

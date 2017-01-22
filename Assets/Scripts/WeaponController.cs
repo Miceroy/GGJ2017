@@ -13,13 +13,22 @@ public class WeaponController : MonoBehaviour
     public Transform characterDirection;
     public float m_cooldownTime = 1.0f;
     public float m_gunDamageAmount = 50.0f;
+    public AudioClip m_shootSound;
 
+    private AudioSource m_AudioSource;
     bool m_canShoot;
    
     // Use this for initialization
     void Start()
     {
+        m_AudioSource = GetComponent<AudioSource>();
         enableShooting();
+    }
+
+    private void PlayShootSound()
+    {
+        m_AudioSource.clip = m_shootSound;
+        m_AudioSource.Play();
     }
 
     void enableShooting()
@@ -60,7 +69,7 @@ public class WeaponController : MonoBehaviour
         //  Transform go = Instantiate(smokeParticle, spawnPos.position, spawnPos.rotation).transform;
         //  go.parent = go;
         smokeParticle.Play();
-
+        PlayShootSound();
         pyssy.GetComponent<Animator>().SetBool("ShotFired", true);
 
        // Vector3 offset = Quaternion.Inverse(characterDirection.rotation) * new Vector3(0.4f, -0.4f, 0.0f);

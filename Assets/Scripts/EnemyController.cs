@@ -68,7 +68,7 @@ public class EnemyController : MonoBehaviour
                 if (m_pushed == false)
                 {
                     stopEnemy();
-                    Invoke("playEnemy", 2.35f);
+                //Invoke("playEnemy", 2.35f);
                     Invoke("shootBullet", 1.4f);
                 }
 
@@ -146,7 +146,7 @@ public class EnemyController : MonoBehaviour
 
     void disableDamageAnimation()
     {
-        playEnemy();
+        //playEnemy();
         m_enableShooting = true;
         animator.SetBool("TakeDamage", false);
     }

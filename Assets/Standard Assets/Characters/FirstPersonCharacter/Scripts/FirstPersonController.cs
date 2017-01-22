@@ -134,9 +134,12 @@ namespace UnityStandardAssets.Characters.FirstPerson
         private void FixedUpdate()
         {
             float speed;
-            GetInput(out speed);   
+            GetInput(out speed);
             // always move along the camera forward as it is the direction that it being aimed at
-           
+
+            GameObject pys = GameObject.Find("PyssyParent");
+            Quaternion targetRot = Quaternion.Euler(0, 0, 0);
+
             if (m_GravityMultiplier > 0.0f)
             {
                 m_Camera.fieldOfView = Mathf.Lerp(m_Camera.fieldOfView, m_initialFov, m_FovLerpDelta);
@@ -172,6 +175,8 @@ namespace UnityStandardAssets.Characters.FirstPerson
             }
             else
             {
+                targetRot = Quaternion.Euler(90f, 0, 0);
+
                 float speedMult = Math.Max(1f, (m_attackMult -= Time.fixedDeltaTime *  m_ChargeSpeedOffset));
 
                 if (speedMult > 1f && m_chargeTimer <= 0f)
@@ -203,6 +208,9 @@ namespace UnityStandardAssets.Characters.FirstPerson
                 m_MoveDir.z = desiredMove.z * speed * speedMult;
                 m_CollisionFlags = m_CharacterController.Move(m_MoveDir * Time.fixedDeltaTime);
             }
+
+            pys.transform.localRotation = Quaternion.Lerp(pys.transform.localRotation, targetRot, 0.1f);
+
             ProgressStepCycle(speed);
             UpdateCameraPosition(speed);
 

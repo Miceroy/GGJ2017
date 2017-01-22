@@ -9,6 +9,7 @@ public class SceneController : MonoBehaviour
 
     private bool m_waiting = true;
     private float m_WaveTimer = 0f;
+    private bool m_firstWave = true;
     private EnemySpawner[] m_spawners;
 
 	// Use this for initialization
@@ -21,12 +22,12 @@ public class SceneController : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
-		if (m_waiting)
+        if (m_waiting)
         {
             Text inboundText = GameObject.Find("WaveInboundText").GetComponent<Text>();
 
             const float fadeTime = 1f;
-            const float half = fadeTime * 0.5f;
+            const float maxAlpha = 1f / fadeTime;
 
             if ((m_WaveTimer -= Time.deltaTime) <= fadeTime)
             {
@@ -34,7 +35,7 @@ public class SceneController : MonoBehaviour
                 inboundText.text = "Wave inbound!";
 
                 Color col = inboundText.color;
-                col.a = m_WaveTimer * half;
+                col.a = m_WaveTimer * maxAlpha;
                 inboundText.color = col;
             }
             if (m_WaveTimer <= 0f)
@@ -45,7 +46,18 @@ public class SceneController : MonoBehaviour
                 m_waiting = false;
                 inboundText.enabled = false;
             }
+            if (m_WaveTimer > (m_WaveWaitTime - fadeTime) && !m_firstWave)
+            {
+                inboundText.enabled = true;
+                inboundText.text = "Wave complete!";
+
+                Color col = inboundText.color;
+                col.a = m_WaveTimer - (m_WaveWaitTime - fadeTime) * maxAlpha;
+                inboundText.color = col;
+            }
         }
+        else
+            m_firstWave = false;
 
         Text text = GameObject.Find("WaveTimerText").GetComponent<Text>();
 

@@ -12,6 +12,7 @@ public class GameController : MonoBehaviour {
     public float m_staminaIncreaseSpeed = 0.1f;
     int m_score;
     float m_stamina;
+  //  bool m_inMainMenu = true;
 
     public float getStamina()
     {
@@ -51,6 +52,7 @@ public class GameController : MonoBehaviour {
     // Called, when player has died
     public void onGameOver()
     {
+        Cursor.visible = true;
         gameOverObject.SetActive(true);
         Invoke("loadMainMenu", 5.0f);
     }
@@ -65,11 +67,15 @@ public class GameController : MonoBehaviour {
 
     public void loadMainMenu()
     {
+  //      m_inMainMenu = true;
+        Cursor.visible = true;
         SceneManager.LoadScene("Scenes/MainMenuScene");
+        Cursor.visible = true;
     }
 
     public void startGame()
     {
+ //       m_inMainMenu = false;
         SceneManager.LoadScene("Scenes/GameScene");
     }
 
@@ -80,6 +86,25 @@ public class GameController : MonoBehaviour {
 
     void Update()
     {
+        if (Application.loadedLevelName == "MainMenuScene")
+        {
+            Cursor.visible = true;
+        }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (Application.loadedLevelName == "MainMenuScene")
+            {
+                Cursor.visible = true;
+                exit();
+            }
+            else
+            {
+                Debug.Log("Quitting game");
+                onGameOver();
+            }
+        }
+
         if (GameObject.FindGameObjectWithTag("Player"))
         {
             bool isGrounded = GameObject.FindGameObjectWithTag("Player").GetComponent<CharacterController>().isGrounded;

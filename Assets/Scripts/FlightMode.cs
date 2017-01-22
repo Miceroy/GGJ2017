@@ -36,4 +36,9 @@ public class FlightMode : MonoBehaviour
         {
         }
     }
+
+    public void setFlyingBool(bool flying)
+    {
+        m_flying = flying;
+    }
 }

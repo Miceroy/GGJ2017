@@ -76,10 +76,13 @@ namespace UnityStandardAssets.Characters.FirstPerson
             if (flying)
             {
                 m_GravityMultiplier = 0.0f;
+                m_attackMult = 0f;
             }
             else
             {
                 m_GravityMultiplier = m_GravityMultiplierTemp;
+                m_attackMult = 0f;
+                m_chargeTimer = 0f;
             }
         }
 
@@ -87,7 +90,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
         private void Update()
         {
             m_chargeTimer -= Time.deltaTime;
-
+            
             RotateView();
             // the jump state needs to read here to make sure it is not missed
             if (!m_Jump)
@@ -107,10 +110,11 @@ namespace UnityStandardAssets.Characters.FirstPerson
                 m_MoveDir.y = 0f;
             }
 
-            if (m_GravityMultiplier <= 0f && CrossPlatformInputManager.GetButtonDown("Fire2"))
+            if (m_GravityMultiplier <= 0f && m_chargeTimer <= 0 && CrossPlatformInputManager.GetButtonDown("Fire2"))
             {
                 GameObject hb = GameObject.Find("GameController");
 
+                m_chargeTimer = 1f;
                 m_attackMult = m_ChargeSpeedOffset;
                 hb.SendMessage("emptyStaminaIfHalf");
             }
@@ -120,7 +124,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
         public void resetAttackMult()
         {
-            m_attackMult = 1f;
+            m_attackMult = 0f;
         }
 
         private void PlayLandingSound()
@@ -179,12 +183,14 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
                 float speedMult = Math.Max(1f, (m_attackMult -= Time.fixedDeltaTime *  m_ChargeSpeedOffset));
 
-                if (speedMult > 1f && m_chargeTimer <= 0f)
+                if (speedMult > 1f)
                 {
                     RaycastHit hit;
                     if (Physics.Raycast(transform.position, forwardTransform.forward, out hit, 2f))
                     {
                         m_chargeTimer = 1f;
+                        setFlying(false);
+                        SendMessage("setFlyingBool", false);
 
                         GameObject[] objs = GameObject.FindGameObjectsWithTag("Enemy");
 
@@ -204,7 +210,6 @@ namespace UnityStandardAssets.Characters.FirstPerson
                                 enem.transform.SendMessage("pushBack");
                             }
                         }
-                        
                     }
                 }
                 

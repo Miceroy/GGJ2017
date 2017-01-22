@@ -68,7 +68,7 @@ public class HealthController : MonoBehaviour
         {
             GameController.instance().onEnemyDestroyed();
             SendMessage("dying");
-            Invoke("destroyMe", 3.0f);
+            Invoke("destroyMe", 5.0f);
         }
     }
 

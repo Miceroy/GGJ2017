@@ -188,10 +188,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
                             if (mag < 5f)
                             {
-                                toEnemy = toEnemy.normalized * Mathf.Min(5f - mag, 2.5f);
-                                toEnemy.y = 0f;
-
-                                enem.transform.SendMessage("pushBack", toEnemy);
+                                enem.transform.SendMessage("pushBack");
                             }
                         }
                         

@@ -11,7 +11,6 @@ public class EnemyController : MonoBehaviour
     private float m_shootTimer = 0f;
     private GameObject m_playerObject;
     private bool m_pushed = false;
-    private Vector3 m_pushMovement;
     bool m_enableShooting;
     private float m_pushTimer = 0f;
     float m_oldSpeed;
@@ -32,9 +31,6 @@ public class EnemyController : MonoBehaviour
 
         if (m_pushed)
         {
-            m_pushMovement.x *= (1f - Time.fixedDeltaTime * 2f);
-            m_pushMovement.z *= (1f - Time.fixedDeltaTime * 2f);
-
             m_pushTimer += Time.fixedDeltaTime;
 
             if (m_pushTimer >= 3.9f)
@@ -43,11 +39,6 @@ public class EnemyController : MonoBehaviour
                 GetComponent<HealthController>().applyDamage(25f);
                 GetComponent<NavMeshAgent>().enabled = true;
             }
-
-            Vector3 pos = transform.position;
-            pos += m_pushMovement;
-
-            transform.position = pos;
 
             return;
         }
@@ -123,7 +114,7 @@ public class EnemyController : MonoBehaviour
         }
     }
 
-    public void pushBack(Vector3 amount)
+    public void pushBack()
     {
         m_pushed = true;
         m_pushTimer = 0f;
@@ -131,8 +122,6 @@ public class EnemyController : MonoBehaviour
         GetComponent<NavMeshAgent>().enabled = false;
         animator.SetBool("BlastWave", true);
         Invoke("restoreEnemy", 1.95f);
-
-        m_pushMovement = amount;
     }
 
     void applyDamage(float dmg)

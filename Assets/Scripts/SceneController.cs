@@ -24,6 +24,8 @@ public class SceneController : MonoBehaviour
     {
         if (m_waiting)
         {
+            GameObject.Find("FPSController").SendMessage("increaseHealth", 50f * Time.deltaTime);
+
             Text inboundText = GameObject.Find("WaveInboundText").GetComponent<Text>();
 
             const float fadeTime = 1f;

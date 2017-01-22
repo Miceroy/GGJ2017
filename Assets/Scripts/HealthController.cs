@@ -27,6 +27,18 @@ public class HealthController : MonoBehaviour
         bloodTexture.SetActive(false);
     }
 
+    public void increaseHealth(float health)
+    {
+        m_health = Mathf.Min(100f, m_health + health);
+
+        GameObject hb = GameObject.FindGameObjectWithTag("HealthBar");
+        if (hb != null)
+        {
+            HealthBarController hbc = hb.GetComponent<HealthBarController>();
+            hbc.setValue(m_health, m_maxHealth);
+        }
+    }
+
     public void applyDamage(float damage)
     {
         m_health -= damage;

@@ -5,6 +5,8 @@ using UnityStandardAssets.Characters.FirstPerson;
 
 public class HealthController : MonoBehaviour
 {
+    public GameObject bloodTexture;
+
     public float m_health = 100;
 
     private float m_maxHealth;
@@ -15,7 +17,13 @@ public class HealthController : MonoBehaviour
         m_scene = FindObjectOfType<SceneController>();
         m_maxHealth = m_health;
     }
-    
+
+
+    void disableBlood()
+    {
+        bloodTexture.SetActive(false);
+    }
+
     public void applyDamage(float damage)
     {
         m_health -= damage;
@@ -24,6 +32,12 @@ public class HealthController : MonoBehaviour
         {
             m_health = 0.0f;
             Invoke("deleteMe", 0.0f);
+        }
+
+        if (bloodTexture != null)
+        {
+            bloodTexture.SetActive(true);
+            Invoke("disableBlood", 0.2f + ((1.0f-(m_health/m_maxHealth)) * 1.0f));
         }
 
         if (gameObject.tag == "Player")

@@ -36,7 +36,7 @@ public class EnemyController : MonoBehaviour
             if (m_pushTimer >= 3.9f)
             {
                 m_pushed = false;
-                GetComponent<HealthController>().applyDamage(25f);
+                GetComponent<HealthController>().applyDamage(50f);
                 GetComponent<NavMeshAgent>().enabled = true;
             }
 
